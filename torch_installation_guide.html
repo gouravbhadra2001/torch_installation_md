@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.0.3/marked.min.js"></script>
+    <style>
+        /* Disable text selection */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                 supported by Chrome, Opera, and Edge */
+        }
+        @media print {
+         html,
+         body {
+            display: none;
+         }
+      }
+    </style>
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+    // Disable right-click context menu
+    window.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // Fetch the Markdown file
+    fetch('readme.md')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(text => {
+            // Convert Markdown to HTML
+            document.getElementById('content').innerHTML = marked(text);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+</script>
+
+</body>
+</html>
